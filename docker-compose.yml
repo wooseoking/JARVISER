@@ -1,0 +1,50 @@
+version: '3'
+
+services:
+  frontend:
+    build: ./jarviser_frontend
+    image: jarviser-client:latest
+    container_name: jarviser-frontend
+    ports:
+      - "81:81"
+      - "4443:4443"
+    depends_on:
+      - backend
+    volumes:
+      - /home/ubuntu/pemKey/fullchain.pem:/etc/nginx/ssl/fullchain.pem
+      - /home/ubuntu/pemKey/privkey.pem:/etc/nginx/ssl/privkey.pem
+      - /home/ubuntu/pemKey/my_nginx.conf:/etc/nginx/nginx.conf
+
+  backend:
+    build: ./jarviser_backend/jarviser
+    image: jarviser-server:latest
+    container_name: jarviser-backend
+    ports:
+      - "8081:8081"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/jarviser
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: ssafy
+      SERVER_SSL_KEY-STORE-TYPE: PKCS12
+      SERVER_SSL_KEY-STORE: /app/ssl/keystore.p12
+      SERVER_SSL_KEY-STORE-PASSWORD: xvh98r
+      SERVER_SSL_KEY-ALIAS: mykeyalias
+
+    depends_on:
+      - mysql
+    volumes:
+      - /home/ubuntu/pemKey/keystore.p12:/app/ssl/keystore.p12
+
+  mysql:
+    image: mysql
+    container_name: jarviser-mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: ssafy
+      MYSQL_DATABASE: jarviser
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql-data:/var/lib/mysql
+
+volumes:
+  mysql-data:

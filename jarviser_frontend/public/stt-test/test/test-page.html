@@ -1,0 +1,138 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>WebSocket Client</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.5.0/sockjs.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+  </head>
+  <body>
+    <input type="file" id="audioFile" />
+    <button onclick="uploadAudio()">Upload Audio</button>
+    <div id="response"></div>
+
+    <script>
+      var meetingId = 3; // 회의 ID 설정
+      var socket = new SockJS(window.SERVER_URL+"" + "/ws");
+      var stompClient = Stomp.over(socket);
+      stompClient.connect({}, function (frame) {
+        stompClient.subscribe(
+          "/topic/fRsFnxwhA7frdnfFMjNPKA==" + meetingId,
+          function (messageOutput) {
+            //받았다. 그러면 바디를 열어서 확인하면
+            //바디 안에 누가 보냈는지
+            //어떤 타입인지 stt냐 chating
+            //어떤 내용인지
+            document.getElementById("response").innerText =
+              "Received: " + messageOutput.body;
+          }
+        );
+      });
+
+      function uploadAudio() {
+        var token = localStorage.getItem("access-token");
+        var audioFile = document.getElementById("audioFile").files[0];
+        var serverUrl = window.SERVER_URL+"" + "/audio/transcript"; // 서버의 URL
+
+        var formData = new FormData();
+        formData.append("file", audioFile);
+        formData.append("meetingId", "fRsFnxwhA7frdnfFMjNPKA==");
+
+        fetch(serverUrl, {
+          method: "POST",
+          body: formData,
+          headers: {
+            Authorization: "Bearer " + token,
+          },
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            console.log("File uploaded successfully");
+          });
+      }
+
+      function uploadText(userText) {
+        var token = localStorage.getItem("access-token");
+        var serverUrl = window.SERVER_URL+"" + "/meeting/message"; // 서버의 URL
+
+        var formData = new FormData();
+        formData.append("meetingId", "fRsFnxwhA7frdnfFMjNPKA==");
+        formData.append("content", userText);
+
+        fetch(serverUrl, {
+          method: "POST",
+          body: formData,
+          headers: {
+            Authorization: "Bearer " + token,
+          },
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            console.log(data);
+          });
+      }
+
+      // 페이지에 접속했을 때 서버에 알리는 함수
+      function notifyServerOnConnect() {
+        var token = localStorage.getItem("access-token");
+        var serverUrl = window.SERVER_URL+"" + "/meeting/connect"; // 서버의 URL
+        fetch(serverUrl, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + token,
+          },
+          body: JSON.stringify({ meetingId: meetingId }),
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            console.log("Connected:", data);
+          });
+      }
+
+      // 페이지에서 나갈 때 서버에 알리는 함수
+      function notifyServerOnDisconnect() {
+        var token = localStorage.getItem("access-token");
+        var serverUrl = window.SERVER_URL+"" + "/meeting/disconnect"; // 서버의 URL
+        fetch(serverUrl, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + token,
+          },
+          body: JSON.stringify({ meetingId: meetingId }),
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            console.log("Disconnected:", data);
+          });
+      }
+
+      function checkConnection() {
+        var token = localStorage.getItem("access-token");
+        var serverUrl = window.SERVER_URL+"" + "/meeting/check-connection"; // 서버의 URL
+
+        fetch(serverUrl, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + token,
+          },
+          body: JSON.stringify({ meetingId: meetingId }),
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            console.log("Connection checked:", data);
+          });
+      }
+
+      // 10초마다 접속 상태 확인
+      setInterval(checkConnection, 10000);
+
+      // 페이지 로드 시점에서 접속 알림 함수 호출
+      window.onload = notifyServerOnConnect;
+
+      // 페이지 닫기 이벤트에 대한 리스너
+      window.addEventListener("beforeunload", notifyServerOnDisconnect);
+    </script>
+  </body>
+</html>

@@ -1,0 +1,61 @@
+.chat-container {
+  background-color: #f0f0f0;
+  padding: 20px;
+  height: 500px;
+  border-radius: 10px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+}
+.chat-title {
+  color: #f0f0f0;
+  font-size: 15px;
+  font-weight: bold;
+  text-align: center;
+  align-items: center;
+  background-color: #749bc2; /* 배경 색 */
+  width: calc(100%);
+  height: 25px;
+  margin-bottom: 20px; /* 제목 아래의 여백 */
+  box-sizing: border-box; /* padding과 border가 width와 height에 포함되도록 설정 */
+}
+
+.chat-message {
+  padding: 10px 20px;
+  margin: 10px;
+  border-radius: 20px;
+  background-color: #fff;
+  max-width: 70%;
+  /* display: inline-block; */
+  word-wrap: break-word;
+  transition: top 0.3s ease-in-out;
+  position: relative;
+}
+.chat-message.dragging {
+  opacity: 0.5;
+  transform: scale(1.05);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+.sent {
+  align-self: flex-end; /* 오른쪽 정렬 */
+  background-color: #749bc2;
+}
+
+.received {
+  align-self: flex-start; /* 왼쪽 정렬 */
+}
+
+.dragging {
+  opacity: 0; /* 드래그 중인 요소를 보이지 않게 합니다 */
+}
+
+#sttChatUserName {
+  /* background-color: #f0f0f0 !important; */
+  color: #dfdfdf !important;
+  z-index: 100000;
+}

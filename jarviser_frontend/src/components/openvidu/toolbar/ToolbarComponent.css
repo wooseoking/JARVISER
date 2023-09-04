@@ -1,0 +1,92 @@
+#header {
+  color: #f6f4eb;
+  height: 40px;
+  background-color: #91c8e4;
+  padding: 0 14px 0 0;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 999999;
+  min-width: 400px !important;
+}
+.toolbar {
+  padding: 0 !important;
+}
+
+.headerLight {
+  color: #706969 !important;
+  background-color: #f6f4eb !important;
+}
+
+#navSessionInfo {
+  position: absolute;
+  display: flex;
+  align-items: center;
+}
+
+#navButtons {
+  position: absolute;
+  left: 0;
+  right: 0;
+  min-width: 400px;
+}
+#navChatButton {
+  position: absolute;
+  right: 10px;
+  top: 0;
+}
+
+#titleContent {
+  max-width: 100px;
+  background-color: #f6f4eb;
+  color: #494949;
+
+  padding: 5px 5px; /* 상하 패딩 추가 */
+  font-size: 16px;
+  /* overflow: hidden; */
+  /* text-overflow: ellipsis; */
+  /* float: right; */
+  border-radius: 5px; /* 둥근 모서리 추가 */
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1); /* 그림자 추가 */
+  text-align: center; /* 텍스트 중앙 정렬 */
+  align-items: center;
+  justify-content: center;
+}
+
+.titleContentLight {
+  background-color: #f6f4eb !important;
+  color: #000;
+}
+
+#header_img {
+  max-width: 80px;
+  margin-right: 10px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+#session-title {
+  font-family: "Open Sans", sans-serif;
+}
+
+#point {
+  width: 10px;
+  height: 10px;
+  position: absolute;
+  top: 12px;
+  right: 33px;
+  border-radius: 50%;
+  background-color: #ffa600;
+  border: 1px solid #000;
+  z-index: 99999;
+}
+.pointLight {
+  border: 1px solid #f6f4eb !important;
+}
+
+@media only screen and (max-width: 700px) {
+  #titleContent,
+  #navChatButton {
+    display: none;
+  }
+}

@@ -1,0 +1,82 @@
+{
+  "name": "jarviser_frontend",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "@11ty/eleventy": "^2.0.1",
+    "@material-ui/core": "4.9.10",
+    "@material-ui/icons": "4.9.1",
+    "@ricky0123/vad-react": "^0.0.17",
+    "@ricky0123/vad-web": "0.0.12",
+    "@stomp/stompjs": "^7.0.0",
+    "@testing-library/jest-dom": "^5.17.0",
+    "@testing-library/react": "^13.4.0",
+    "@testing-library/user-event": "^13.5.0",
+    "animate.css": "^4.1.1",
+    "axios": "^1.4.0",
+    "buffer": "^6.0.3",
+    "chart.js": "^4.3.3",
+    "crypto-browserify": "^3.12.0",
+    "extendable-media-recorder": "^8.1.0",
+    "jquery": "3.5.0",
+    "jsonwebtoken": "^9.0.1",
+    "jwt-decode": "^3.1.2",
+    "moment": "^2.29.4",
+    "nodemon": "^3.0.1",
+    "onnxruntime-web": "^1.15.1",
+    "openvidu-browser": "2.27.0",
+    "query-string": "^8.1.0",
+    "react": "^18.2.0",
+    "react-beautiful-dnd": "^13.1.1",
+    "react-calendar": "^4.6.0",
+    "react-chartjs-2": "^5.2.0",
+    "react-dnd": "^16.0.1",
+    "react-dnd-html5-backend": "^16.0.1",
+    "react-dom": "^18.2.0",
+    "react-emoji": "^0.5.0",
+    "react-hook-form": "^7.45.2",
+    "react-icons": "^4.10.1",
+    "react-minimal-pie-chart": "^8.4.0",
+    "react-modal": "^3.16.1",
+    "react-router-dom": "^6.14.2",
+    "react-scripts": "5.0.1",
+    "react-scroll-to-bottom": "^4.2.0",
+    "socket.io-client": "^2.2.0",
+    "sockjs": "^0.3.24",
+    "sockjs-client": "^1.6.1",
+    "stomp": "^0.1.1",
+    "stompjs": "^2.3.3",
+    "stream-browserify": "^3.0.0",
+    "styled-components": "^6.0.7",
+    "util": "^0.12.5",
+    "web-vitals": "^2.1.4"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "build:openvidu-react": "npm install --prefix ../library/ && node library-copy.js && cd ../library && npm run create-library",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "devDependencies": {
+    "copy-webpack-plugin": "^11.0.0"
+  }
+}
